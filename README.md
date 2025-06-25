@@ -1,3 +1,16 @@
+Project Title: "ScanIT: Smart Age & Identity Verification Using AI and Aadhar Simulation"
+
+Hackathon Event: Zynga Hackathon
+
+Team: Mario Kart: Anushree Bondia,  Anusha Mahajan, Anishka Gupta, Sanya Kapoor, Apoorva
+
+Demo Video:https://drive.google.com/file/d/18uXXYQy4-oYPyG1mBjpEiJimyqMk92-_/view?usp=sharing
+
+Project Deployment Link: https://age-check-aadar-match.vercel.app/
+
+PPT Link: https://drive.google.com/file/d/1_xHihGl0Ktfq-Ck7owNyQSKp_ybXaV8p/view?usp=sharing
+
+
 # 🛂 Age & Identity Verification System Using Simulated Government ID Cards
 ScanIT: Smart Age & Identity Verification Using AI and Aadhar Simulation
 
@@ -17,4 +30,5 @@ This is a **proof-of-concept identity verification tool** that processes a simul
 ![image](https://github.com/user-attachments/assets/eb5bfb9f-5c02-4d63-82fa-8d90760851af)
 
 ![image](https://github.com/user-attachments/assets/abed9d3f-3ad1-4c50-81ee-d0032182bbf0)
+
 
