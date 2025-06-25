@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -95,7 +94,7 @@ const Index = () => {
               </div>
             </div>
             <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mb-4">
-              SecureVerify
+              ScanIT
             </h1>
             <p className="text-xl text-gray-600 mb-6 max-w-2xl mx-auto">
               Advanced identity verification powered by AI face matching and OCR technology
@@ -203,7 +202,7 @@ const Index = () => {
         {/* Progress Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
-            <h1 className="text-2xl font-bold text-gray-800">SecureVerify Process</h1>
+            <h1 className="text-2xl font-bold text-gray-800">ScanIT Process</h1>
             <Badge variant="outline" className="border-blue-400 text-blue-600 bg-blue-50">
               Step {currentStepIndex + 1} of {steps.length}
             </Badge>
