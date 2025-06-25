@@ -1,73 +1,35 @@
-# Welcome to your Lovable project
+# 🛂 Age & Identity Verification System (PoC)
 
-## Project info
+This is a **proof-of-concept identity verification tool** that processes a simulated Aadhar card and compares the extracted photo with a live selfie to verify:
+- If the person matches the ID photo
+- If they meet an age requirement (e.g., 18+)
 
-**URL**: https://lovable.dev/projects/d712169d-fe67-458f-ac46-8c2f2c756602
+🚫 **Disclaimer**: This tool is for demo/educational use only. It does **not** interact with real UIDAI APIs or government systems.
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## 🔧 Features
 
-**Use Lovable**
+- ✅ Extract date of birth (DOB) and photo from a simulated Aadhar card (image or PDF)
+- ✅ Capture a live selfie through a webcam or mobile camera
+- ✅ Compare face from ID and selfie using facial embeddings
+- ✅ Check if the extracted age meets threshold (e.g., 18+)
+- ✅ Display a match confidence score (e.g., 87% match)
+- ✅ Feedback if selfie is blurry or poorly lit *(in progress)*
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/d712169d-fe67-458f-ac46-8c2f2c756602) and start prompting.
+---
 
-Changes made via Lovable will be committed automatically to this repo.
+## 🏗 Suggested Architecture
 
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/d712169d-fe67-458f-ac46-8c2f2c756602) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+```plaintext
+[ Aadhar Image ]
+     ↓
+[ OCR Tool (Tesseract/ML Kit) ]
+     ↓
+[ Extracted DOB + ID Photo ]        ←←←←←←←←←←←←←←←←←←
+     ↓                              ↓
+[ Face Matcher (OpenCV + FaceNet) ] ← [ Live Selfie Capture ]
+     ↓
+[ Confidence Score + Age Validation ]
+     ↓
+[ Result Display in UI ]
