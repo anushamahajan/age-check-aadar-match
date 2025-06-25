@@ -91,7 +91,7 @@ const VerificationResults = ({ verificationData, onReset }: VerificationResultsP
       {/* Detailed Results */}
       <div className="grid md:grid-cols-2 gap-6">
         {/* Face Verification */}
-        <Card>
+        <Card className="border-red-200">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Camera className="w-5 h-5" />
@@ -113,21 +113,21 @@ const VerificationResults = ({ verificationData, onReset }: VerificationResultsP
             <div className="grid grid-cols-2 gap-4 mt-4">
               <div className="text-center">
                 <p className="text-xs text-gray-600 mb-2">Document Photo</p>
-                <div className="bg-gray-100 rounded-lg p-2 h-24 flex items-center justify-center">
+                <div className="bg-yellow-100 rounded-lg p-2 h-24 flex items-center justify-center border border-yellow-200">
                   {documentImage ? (
                     <img src={documentImage} alt="Document" className="max-h-full max-w-full object-contain" />
                   ) : (
-                    <FileText className="w-8 h-8 text-gray-400" />
+                    <FileText className="w-8 h-8 text-yellow-400" />
                   )}
                 </div>
               </div>
               <div className="text-center">
                 <p className="text-xs text-gray-600 mb-2">Live Selfie</p>
-                <div className="bg-gray-100 rounded-lg p-2 h-24 flex items-center justify-center">
+                <div className="bg-red-100 rounded-lg p-2 h-24 flex items-center justify-center border border-red-200">
                   {selfieImage ? (
                     <img src={selfieImage} alt="Selfie" className="max-h-full max-w-full object-contain" />
                   ) : (
-                    <Camera className="w-8 h-8 text-gray-400" />
+                    <Camera className="w-8 h-8 text-red-400" />
                   )}
                 </div>
               </div>
@@ -136,7 +136,7 @@ const VerificationResults = ({ verificationData, onReset }: VerificationResultsP
         </Card>
 
         {/* Age Verification */}
-        <Card>
+        <Card className="border-yellow-200">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Calendar className="w-5 h-5" />
@@ -186,14 +186,14 @@ const VerificationResults = ({ verificationData, onReset }: VerificationResultsP
       </div>
 
       {/* Extracted Information */}
-      <Card>
+      <Card className="border-yellow-200">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <User className="w-5 h-5" />
             Extracted Information
           </CardTitle>
           <CardDescription>
-            Data extracted from the uploaded document
+            Data extracted from the uploaded Aadhaar document
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -204,7 +204,7 @@ const VerificationResults = ({ verificationData, onReset }: VerificationResultsP
                 <p className="font-medium">{extractedData.name}</p>
               </div>
               <div>
-                <span className="text-sm text-gray-600">Document Number</span>
+                <span className="text-sm text-gray-600">Aadhaar Number</span>
                 <p className="font-medium font-mono">{extractedData.documentNumber}</p>
               </div>
             </div>
@@ -223,10 +223,10 @@ const VerificationResults = ({ verificationData, onReset }: VerificationResultsP
       </Card>
 
       {/* Security Notice & Actions */}
-      <Card>
+      <Card className="border-red-200">
         <CardContent className="pt-6">
           <div className="flex items-start gap-3 mb-6">
-            <Shield className="w-5 h-5 text-blue-600 mt-0.5" />
+            <Shield className="w-5 h-5 text-red-600 mt-0.5" />
             <div>
               <h4 className="font-semibold text-gray-900 mb-1">Security & Privacy</h4>
               <p className="text-sm text-gray-600">
@@ -239,7 +239,7 @@ const VerificationResults = ({ verificationData, onReset }: VerificationResultsP
           <Separator className="mb-6" />
           
           <div className="flex justify-center">
-            <Button onClick={onReset} variant="outline" size="lg">
+            <Button onClick={onReset} variant="outline" size="lg" className="border-yellow-300 text-red-600 hover:bg-yellow-50">
               <RotateCcw className="w-4 h-4 mr-2" />
               Start New Verification
             </Button>

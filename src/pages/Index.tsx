@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -79,32 +80,32 @@ const Index = () => {
 
   if (currentStep === 'intro') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white p-4">
+      <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-white to-red-50 p-4">
         <div className="max-w-6xl mx-auto pt-8">
           {/* Hero Section */}
           <div className="text-center mb-12">
             <div className="flex justify-center mb-6">
               <div className="relative">
-                <div className="bg-gradient-to-r from-blue-600 to-blue-500 p-4 rounded-2xl shadow-xl">
+                <div className="bg-gradient-to-r from-red-600 to-yellow-500 p-4 rounded-2xl shadow-xl">
                   <Shield className="w-12 h-12 text-white" />
                 </div>
-                <div className="absolute -top-2 -right-2 bg-white border-2 border-blue-200 rounded-full p-1">
-                  <Zap className="w-4 h-4 text-blue-600" />
+                <div className="absolute -top-2 -right-2 bg-white border-2 border-yellow-300 rounded-full p-1">
+                  <Zap className="w-4 h-4 text-red-600" />
                 </div>
               </div>
             </div>
-            <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mb-4">
+            <h1 className="text-5xl font-bold bg-gradient-to-r from-red-700 to-yellow-600 bg-clip-text text-transparent mb-4">
               ScanIT
             </h1>
-            <p className="text-xl text-gray-600 mb-6 max-w-2xl mx-auto">
-              Advanced identity verification powered by AI face matching and OCR technology
+            <p className="text-xl text-gray-700 mb-6 max-w-2xl mx-auto">
+              Advanced Aadhaar verification powered by AI face matching and OCR technology
             </p>
             <div className="flex justify-center gap-4 mb-8">
-              <Badge variant="secondary" className="bg-blue-100 text-blue-700 border-blue-200 hover:bg-blue-200">
+              <Badge variant="secondary" className="bg-red-100 text-red-700 border-red-200 hover:bg-red-200">
                 <Users className="w-4 h-4 mr-1" />
                 Hackathon Project
               </Badge>
-              <Badge variant="secondary" className="bg-white text-blue-600 border-blue-200 hover:bg-blue-50">
+              <Badge variant="secondary" className="bg-yellow-100 text-yellow-800 border-yellow-200 hover:bg-yellow-200">
                 <Lock className="w-4 h-4 mr-1" />
                 AI Powered
               </Badge>
@@ -113,22 +114,22 @@ const Index = () => {
 
           {/* Features Grid */}
           <div className="grid md:grid-cols-3 gap-6 mb-12">
-            <Card className="bg-white border-blue-200 hover:shadow-lg hover:border-blue-300 transition-all duration-300">
+            <Card className="bg-white border-red-200 hover:shadow-lg hover:border-red-300 transition-all duration-300">
               <CardHeader className="text-center">
-                <div className="bg-blue-100 p-3 rounded-full w-fit mx-auto mb-3">
-                  <FileText className="w-6 h-6 text-blue-600" />
+                <div className="bg-red-100 p-3 rounded-full w-fit mx-auto mb-3">
+                  <FileText className="w-6 h-6 text-red-600" />
                 </div>
                 <CardTitle className="text-gray-800">Smart OCR</CardTitle>
                 <CardDescription className="text-gray-600">
-                  Extract data from Aadhar cards with advanced text recognition
+                  Extract data from Aadhaar cards with advanced text recognition
                 </CardDescription>
               </CardHeader>
             </Card>
 
-            <Card className="bg-white border-blue-200 hover:shadow-lg hover:border-blue-300 transition-all duration-300">
+            <Card className="bg-white border-yellow-200 hover:shadow-lg hover:border-yellow-300 transition-all duration-300">
               <CardHeader className="text-center">
-                <div className="bg-blue-100 p-3 rounded-full w-fit mx-auto mb-3">
-                  <Camera className="w-6 h-6 text-blue-600" />
+                <div className="bg-yellow-100 p-3 rounded-full w-fit mx-auto mb-3">
+                  <Camera className="w-6 h-6 text-yellow-600" />
                 </div>
                 <CardTitle className="text-gray-800">Face Matching</CardTitle>
                 <CardDescription className="text-gray-600">
@@ -137,10 +138,10 @@ const Index = () => {
               </CardHeader>
             </Card>
 
-            <Card className="bg-white border-blue-200 hover:shadow-lg hover:border-blue-300 transition-all duration-300">
+            <Card className="bg-white border-red-200 hover:shadow-lg hover:border-red-300 transition-all duration-300">
               <CardHeader className="text-center">
-                <div className="bg-blue-100 p-3 rounded-full w-fit mx-auto mb-3">
-                  <CheckCircle className="w-6 h-6 text-blue-600" />
+                <div className="bg-red-100 p-3 rounded-full w-fit mx-auto mb-3">
+                  <CheckCircle className="w-6 h-6 text-red-600" />
                 </div>
                 <CardTitle className="text-gray-800">Age Verification</CardTitle>
                 <CardDescription className="text-gray-600">
@@ -151,7 +152,7 @@ const Index = () => {
           </div>
 
           {/* Process Steps */}
-          <Card className="bg-white border-blue-200 mb-8 shadow-sm">
+          <Card className="bg-white border-yellow-200 mb-8 shadow-sm">
             <CardHeader>
               <CardTitle className="text-gray-800 text-2xl text-center mb-4">
                 How It Works
@@ -163,14 +164,14 @@ const Index = () => {
                   const Icon = step.icon;
                   return (
                     <div key={step.id} className="text-center">
-                      <div className="bg-gradient-to-r from-blue-600 to-blue-500 p-4 rounded-full w-fit mx-auto mb-4 shadow-lg">
+                      <div className="bg-gradient-to-r from-red-600 to-yellow-500 p-4 rounded-full w-fit mx-auto mb-4 shadow-lg">
                         <Icon className="w-6 h-6 text-white" />
                       </div>
                       <h3 className="font-semibold text-gray-800 text-lg mb-2">
                         {index + 1}. {step.title}
                       </h3>
                       <p className="text-gray-600 text-sm">
-                        {step.id === 'document' && "Upload your Aadhar card for instant data extraction"}
+                        {step.id === 'document' && "Upload your Aadhaar card for instant data extraction"}
                         {step.id === 'selfie' && "Capture a live selfie for biometric comparison"}
                         {step.id === 'results' && "Get detailed verification results with confidence scores"}
                       </p>
@@ -186,7 +187,7 @@ const Index = () => {
             <Button 
               onClick={() => setCurrentStep('document')} 
               size="lg"
-              className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-8 py-4 text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
+              className="bg-gradient-to-r from-red-600 to-yellow-500 hover:from-red-700 hover:to-yellow-600 text-white font-semibold px-8 py-4 text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
             >
               Start Verification Process
             </Button>
@@ -197,17 +198,17 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white p-4">
+    <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-white to-red-50 p-4">
       <div className="max-w-4xl mx-auto pt-8">
         {/* Progress Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
             <h1 className="text-2xl font-bold text-gray-800">ScanIT Process</h1>
-            <Badge variant="outline" className="border-blue-400 text-blue-600 bg-blue-50">
+            <Badge variant="outline" className="border-red-400 text-red-600 bg-red-50">
               Step {currentStepIndex + 1} of {steps.length}
             </Badge>
           </div>
-          <Progress value={progress} className="h-3 bg-blue-100" />
+          <Progress value={progress} className="h-3 bg-yellow-100" />
           <div className="flex justify-between mt-4">
             {steps.map((step, index) => {
               const Icon = step.icon;
@@ -216,15 +217,15 @@ const Index = () => {
               return (
                 <div key={step.id} className="flex items-center">
                   <div className={`p-3 rounded-full transition-all duration-300 ${
-                    isCompleted ? 'bg-blue-600 shadow-lg' : 
-                    isActive ? 'bg-gradient-to-r from-blue-600 to-blue-500 shadow-lg' : 'bg-blue-100'
+                    isCompleted ? 'bg-red-600 shadow-lg' : 
+                    isActive ? 'bg-gradient-to-r from-red-600 to-yellow-500 shadow-lg' : 'bg-yellow-100'
                   }`}>
                     <Icon className={`w-5 h-5 ${
-                      isCompleted || isActive ? 'text-white' : 'text-blue-400'
+                      isCompleted || isActive ? 'text-white' : 'text-red-400'
                     }`} />
                   </div>
                   <span className={`ml-3 text-sm font-medium ${
-                    isActive ? 'text-blue-600' : 'text-gray-600'
+                    isActive ? 'text-red-600' : 'text-gray-600'
                   }`}>
                     {step.title}
                   </span>

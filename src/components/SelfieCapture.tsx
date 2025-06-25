@@ -117,23 +117,23 @@ const SelfieCapture = ({ onSelfieCapture, extractedData }: SelfieCaptureProps) =
 
   return (
     <div className="max-w-2xl mx-auto">
-      <Card className="bg-white border-blue-200 shadow-lg">
-        <CardHeader className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-t-lg">
-          <CardTitle className="flex items-center gap-2 text-blue-800">
+      <Card className="bg-white border-yellow-200 shadow-lg">
+        <CardHeader className="bg-gradient-to-r from-yellow-50 to-red-50 rounded-t-lg">
+          <CardTitle className="flex items-center gap-2 text-red-800">
             <Camera className="w-5 h-5" />
             Take Live Selfie
           </CardTitle>
-          <CardDescription className="text-blue-600">
+          <CardDescription className="text-red-600">
             Take a clear selfie for face verification
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6 p-6">
           {/* Extracted Data Summary */}
           {extractedData && (
-            <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg">
+            <div className="bg-yellow-50 border border-yellow-200 p-4 rounded-lg">
               <div className="flex items-center gap-2 mb-2">
-                <User className="w-4 h-4 text-blue-600" />
-                <span className="font-semibold text-blue-900">Document Information</span>
+                <User className="w-4 h-4 text-red-600" />
+                <span className="font-semibold text-red-900">Document Information</span>
               </div>
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
@@ -144,7 +144,7 @@ const SelfieCapture = ({ onSelfieCapture, extractedData }: SelfieCaptureProps) =
                   <span className="text-gray-600">Age:</span>
                   <span className="ml-2 font-medium text-gray-800">{extractedData.age}</span>
                   {extractedData.age && extractedData.age >= 18 && (
-                    <Badge variant="secondary" className="ml-2 text-xs bg-blue-100 text-blue-700">18+</Badge>
+                    <Badge variant="secondary" className="ml-2 text-xs bg-red-100 text-red-700">18+</Badge>
                   )}
                 </div>
               </div>
@@ -153,7 +153,7 @@ const SelfieCapture = ({ onSelfieCapture, extractedData }: SelfieCaptureProps) =
 
           {/* Camera/Photo Display */}
           <div className="relative">
-            <div className="bg-gray-900 rounded-lg overflow-hidden aspect-[4/3] flex items-center justify-center border-2 border-blue-200">
+            <div className="bg-gray-900 rounded-lg overflow-hidden aspect-[4/3] flex items-center justify-center border-2 border-yellow-200">
               {cameraError ? (
                 <div className="text-center text-white p-8">
                   <Camera className="w-12 h-12 mx-auto mb-4 text-gray-400" />
@@ -161,7 +161,7 @@ const SelfieCapture = ({ onSelfieCapture, extractedData }: SelfieCaptureProps) =
                   <Button 
                     onClick={startCamera} 
                     variant="outline" 
-                    className="mt-4 bg-white text-blue-600 border-blue-300 hover:bg-blue-50"
+                    className="mt-4 bg-white text-red-600 border-yellow-300 hover:bg-yellow-50"
                   >
                     Retry Camera Access
                   </Button>
@@ -183,7 +183,7 @@ const SelfieCapture = ({ onSelfieCapture, extractedData }: SelfieCaptureProps) =
                   />
                   {/* Face guide overlay */}
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="border-2 border-blue-400 border-dashed rounded-full w-48 h-48 opacity-70"></div>
+                    <div className="border-2 border-yellow-400 border-dashed rounded-full w-48 h-48 opacity-70"></div>
                   </div>
                 </>
               )}
@@ -192,9 +192,9 @@ const SelfieCapture = ({ onSelfieCapture, extractedData }: SelfieCaptureProps) =
           </div>
 
           {/* Selfie Guidelines */}
-          <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg">
-            <h4 className="font-semibold text-blue-900 mb-2">Selfie Guidelines</h4>
-            <ul className="text-sm text-blue-800 space-y-1">
+          <div className="bg-red-50 border border-red-200 p-4 rounded-lg">
+            <h4 className="font-semibold text-red-900 mb-2">Selfie Guidelines</h4>
+            <ul className="text-sm text-gray-700 space-y-1">
               <li>• Look directly at the camera</li>
               <li>• Ensure good lighting on your face</li>
               <li>• Remove glasses or accessories that cover your face</li>
@@ -210,7 +210,7 @@ const SelfieCapture = ({ onSelfieCapture, extractedData }: SelfieCaptureProps) =
                 <Button 
                   variant="outline" 
                   onClick={retakePhoto}
-                  className="flex-1 border-blue-300 text-blue-600 hover:bg-blue-50"
+                  className="flex-1 border-yellow-300 text-red-600 hover:bg-yellow-50"
                 >
                   <RotateCcw className="w-4 h-4 mr-2" />
                   Retake
@@ -218,7 +218,7 @@ const SelfieCapture = ({ onSelfieCapture, extractedData }: SelfieCaptureProps) =
                 <Button 
                   onClick={confirmSelfie}
                   disabled={isProcessing}
-                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+                  className="flex-1 bg-gradient-to-r from-red-600 to-yellow-500 hover:from-red-700 hover:to-yellow-600 text-white"
                 >
                   {isProcessing ? (
                     <>
@@ -237,7 +237,7 @@ const SelfieCapture = ({ onSelfieCapture, extractedData }: SelfieCaptureProps) =
               <Button 
                 onClick={capturePhoto}
                 disabled={!stream || cameraError !== null}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                className="w-full bg-gradient-to-r from-red-600 to-yellow-500 hover:from-red-700 hover:to-yellow-600 text-white"
               >
                 <Camera className="w-4 h-4 mr-2" />
                 Capture Photo

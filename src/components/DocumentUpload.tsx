@@ -59,16 +59,16 @@ const DocumentUpload = ({ onDocumentUpload }: DocumentUploadProps) => {
       
       // Simulate extracted data (in real implementation, this would come from OCR)
       const extractedData = {
-        name: "John Doe",
+        name: "राम कुमार शर्मा",
         dob: "15/03/1995",
         age: 29,
         documentNumber: "1234 5678 9012",
-        address: "123 Main Street, City, State"
+        address: "123 मुख्य सड़क, नई दिल्ली"
       };
 
       toast({
         title: "Document processed successfully",
-        description: "Information extracted from your Aadhar card"
+        description: "Information extracted from your Aadhaar card"
       });
 
       onDocumentUpload(uploadedImage, extractedData);
@@ -85,36 +85,36 @@ const DocumentUpload = ({ onDocumentUpload }: DocumentUploadProps) => {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <Card className="bg-white border-blue-200 shadow-lg">
-        <CardHeader className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-t-lg">
-          <CardTitle className="flex items-center gap-2 text-blue-800">
+      <Card className="bg-white border-red-200 shadow-lg">
+        <CardHeader className="bg-gradient-to-r from-red-50 to-yellow-50 rounded-t-lg">
+          <CardTitle className="flex items-center gap-2 text-red-800">
             <FileText className="w-5 h-5" />
-            Upload Aadhar Card
+            Upload Aadhaar Card
           </CardTitle>
-          <CardDescription className="text-blue-600">
-            Upload a clear image of your Aadhar card for verification
+          <CardDescription className="text-red-600">
+            Upload a clear image of your Aadhaar card for verification
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6 p-6">
           {/* Upload Area */}
           <div className="space-y-4">
             <Label htmlFor="document-upload" className="text-gray-700 font-medium">Select Document Image</Label>
-            <div className="border-2 border-dashed border-blue-300 rounded-lg p-8 text-center hover:border-blue-500 hover:bg-blue-50 transition-colors">
+            <div className="border-2 border-dashed border-yellow-300 rounded-lg p-8 text-center hover:border-red-400 hover:bg-yellow-50 transition-colors">
               {uploadedImage ? (
                 <div className="space-y-4">
                   <img 
                     src={uploadedImage} 
                     alt="Uploaded document" 
-                    className="max-w-full h-48 object-contain mx-auto rounded-lg shadow-md border border-blue-200"
+                    className="max-w-full h-48 object-contain mx-auto rounded-lg shadow-md border border-yellow-200"
                   />
-                  <div className="flex items-center justify-center gap-2 text-blue-600">
+                  <div className="flex items-center justify-center gap-2 text-red-600">
                     <CheckCircle className="w-4 h-4" />
                     <span className="text-sm font-medium">Document uploaded successfully</span>
                   </div>
                 </div>
               ) : (
                 <div className="space-y-4">
-                  <Upload className="w-12 h-12 text-blue-400 mx-auto" />
+                  <Upload className="w-12 h-12 text-yellow-400 mx-auto" />
                   <div>
                     <p className="text-lg font-medium text-gray-700">
                       Click to upload or drag and drop
@@ -138,7 +138,7 @@ const DocumentUpload = ({ onDocumentUpload }: DocumentUploadProps) => {
                   type="button" 
                   variant="outline" 
                   onClick={() => fileInputRef.current?.click()}
-                  className="mt-4 border-blue-300 text-blue-600 hover:bg-blue-50 hover:border-blue-400"
+                  className="mt-4 border-yellow-300 text-red-600 hover:bg-yellow-50 hover:border-red-400"
                 >
                   Select File
                 </Button>
@@ -147,10 +147,10 @@ const DocumentUpload = ({ onDocumentUpload }: DocumentUploadProps) => {
           </div>
 
           {/* Upload Guidelines */}
-          <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg">
-            <h4 className="font-semibold text-blue-900 mb-2">Upload Guidelines</h4>
-            <ul className="text-sm text-blue-800 space-y-1">
-              <li>• Ensure the document is clearly visible and well-lit</li>
+          <div className="bg-yellow-50 border border-yellow-200 p-4 rounded-lg">
+            <h4 className="font-semibold text-red-900 mb-2">Upload Guidelines</h4>
+            <ul className="text-sm text-gray-700 space-y-1">
+              <li>• Ensure the Aadhaar card is clearly visible and well-lit</li>
               <li>• All text should be readable without blur</li>
               <li>• Avoid shadows or reflections on the document</li>
               <li>• The entire document should be within the frame</li>
@@ -163,7 +163,7 @@ const DocumentUpload = ({ onDocumentUpload }: DocumentUploadProps) => {
               <Button 
                 variant="outline" 
                 onClick={() => fileInputRef.current?.click()}
-                className="flex-1 border-blue-300 text-blue-600 hover:bg-blue-50"
+                className="flex-1 border-yellow-300 text-red-600 hover:bg-yellow-50"
               >
                 Choose Different Image
               </Button>
@@ -171,7 +171,7 @@ const DocumentUpload = ({ onDocumentUpload }: DocumentUploadProps) => {
             <Button 
               onClick={processDocument}
               disabled={!uploadedImage || isProcessing}
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+              className="flex-1 bg-gradient-to-r from-red-600 to-yellow-500 hover:from-red-700 hover:to-yellow-600 text-white"
             >
               {isProcessing ? (
                 <>
