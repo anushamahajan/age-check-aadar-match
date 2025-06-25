@@ -85,38 +85,38 @@ const DocumentUpload = ({ onDocumentUpload }: DocumentUploadProps) => {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
+      <Card className="bg-white border-blue-200 shadow-lg">
+        <CardHeader className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-t-lg">
+          <CardTitle className="flex items-center gap-2 text-blue-800">
             <FileText className="w-5 h-5" />
             Upload Aadhar Card
           </CardTitle>
-          <CardDescription>
+          <CardDescription className="text-blue-600">
             Upload a clear image of your Aadhar card for verification
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-6 p-6">
           {/* Upload Area */}
           <div className="space-y-4">
-            <Label htmlFor="document-upload">Select Document Image</Label>
-            <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-blue-400 transition-colors">
+            <Label htmlFor="document-upload" className="text-gray-700 font-medium">Select Document Image</Label>
+            <div className="border-2 border-dashed border-blue-300 rounded-lg p-8 text-center hover:border-blue-500 hover:bg-blue-50 transition-colors">
               {uploadedImage ? (
                 <div className="space-y-4">
                   <img 
                     src={uploadedImage} 
                     alt="Uploaded document" 
-                    className="max-w-full h-48 object-contain mx-auto rounded-lg shadow-md"
+                    className="max-w-full h-48 object-contain mx-auto rounded-lg shadow-md border border-blue-200"
                   />
-                  <div className="flex items-center justify-center gap-2 text-green-600">
+                  <div className="flex items-center justify-center gap-2 text-blue-600">
                     <CheckCircle className="w-4 h-4" />
                     <span className="text-sm font-medium">Document uploaded successfully</span>
                   </div>
                 </div>
               ) : (
                 <div className="space-y-4">
-                  <Upload className="w-12 h-12 text-gray-400 mx-auto" />
+                  <Upload className="w-12 h-12 text-blue-400 mx-auto" />
                   <div>
-                    <p className="text-lg font-medium text-gray-600">
+                    <p className="text-lg font-medium text-gray-700">
                       Click to upload or drag and drop
                     </p>
                     <p className="text-sm text-gray-500">
@@ -138,7 +138,7 @@ const DocumentUpload = ({ onDocumentUpload }: DocumentUploadProps) => {
                   type="button" 
                   variant="outline" 
                   onClick={() => fileInputRef.current?.click()}
-                  className="mt-4"
+                  className="mt-4 border-blue-300 text-blue-600 hover:bg-blue-50 hover:border-blue-400"
                 >
                   Select File
                 </Button>
@@ -147,7 +147,7 @@ const DocumentUpload = ({ onDocumentUpload }: DocumentUploadProps) => {
           </div>
 
           {/* Upload Guidelines */}
-          <div className="bg-blue-50 p-4 rounded-lg">
+          <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg">
             <h4 className="font-semibold text-blue-900 mb-2">Upload Guidelines</h4>
             <ul className="text-sm text-blue-800 space-y-1">
               <li>• Ensure the document is clearly visible and well-lit</li>
@@ -163,7 +163,7 @@ const DocumentUpload = ({ onDocumentUpload }: DocumentUploadProps) => {
               <Button 
                 variant="outline" 
                 onClick={() => fileInputRef.current?.click()}
-                className="flex-1"
+                className="flex-1 border-blue-300 text-blue-600 hover:bg-blue-50"
               >
                 Choose Different Image
               </Button>
@@ -171,7 +171,7 @@ const DocumentUpload = ({ onDocumentUpload }: DocumentUploadProps) => {
             <Button 
               onClick={processDocument}
               disabled={!uploadedImage || isProcessing}
-              className="flex-1 bg-blue-600 hover:bg-blue-700"
+              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
             >
               {isProcessing ? (
                 <>
