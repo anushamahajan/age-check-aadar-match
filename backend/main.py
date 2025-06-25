@@ -2,13 +2,18 @@ import os
 import shutil
 import json
 import uuid
-from datetime import datetime # Import for age calculation
+from datetime import datetime
 from typing import List, Dict, Any, Union
 
+# --- CRITICAL FIX: Apply nest_asyncio at the very beginning ---
+import nest_asyncio
+nest_asyncio.apply()
+# --- END CRITICAL FIX ---
+
 from fastapi import FastAPI, UploadFile, File, HTTPException, Depends, status
-from fastapi.responses import JSONResponse, FileResponse # FileResponse is needed for /get_extracted_image
+from fastapi.responses import JSONResponse, FileResponse
 from fastapi.middleware.cors import CORSMiddleware
-from dotenv import load_dotenv # To load environment variables from a .env file
+from dotenv import load_dotenv
 
 # Import the DocumentProcessorService from the separate file
 from backend.services.document_processor_service import DocumentProcessorService
@@ -17,18 +22,17 @@ from backend.services.document_processor_service import DocumentProcessorService
 load_dotenv('.env')
 
 # --- Configuration ---
-# Directory to temporarily store uploaded files before processing
 UPLOADS_DIR = "./uploaded_files"
-# Directory for DocumentProcessorService to store intermediate/extracted files
 TEMP_PROCESSING_DIR = "./backend_temp_data"
 
-# Ensure upload directory exists
 os.makedirs(UPLOADS_DIR, exist_ok=True)
-# The DocumentProcessorService will create TEMP_PROCESSING_DIR itself
+# TEMP_PROCESSING_DIR will be created by DocumentProcessorService
 
-# Get API keys from environment variables
 LLAMA_CLOUD_API_KEY = os.getenv("LLAMA_CLOUD_API_KEY")
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY") # Get Gemini API Key
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+
+# --- Google Gemini related imports ---
+import google.generativeai as genai
 
 # --- FastAPI App Initialization ---
 app = FastAPI(
@@ -42,7 +46,6 @@ gemini_model = None
 if GOOGLE_API_KEY:
     try:
         genai.configure(api_key=GOOGLE_API_KEY)
-        # Initialize Gemini model. Using gemini-1.5-flash-latest for speed and cost-effectiveness for extraction.
         gemini_model = genai.GenerativeModel('gemini-1.5-flash-latest')
         print("Gemini 1.5 Flash model initialized.")
     except Exception as e:
@@ -53,14 +56,12 @@ else:
 
 
 # --- CORS Middleware ---
-# Configure CORS to allow requests from your React frontend.
-# Adjust `allow_origins` to your frontend's URL in production.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"], # Allow your React dev server
+    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
     allow_credentials=True,
-    allow_methods=["*"], # Allow all methods (GET, POST, etc.)
-    allow_headers=["*"], # Allow all headers
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # --- Dependency Injection for DocumentProcessorService ---
@@ -75,7 +76,7 @@ def get_processor_service() -> DocumentProcessorService:
         temp_storage_dir=TEMP_PROCESSING_DIR
     )
 
-# --- Helper Function for Gemini Extraction (now in main.py) ---
+# --- Helper Function for Gemini Extraction ---
 async def extract_id_info_with_gemini(document_text: str) -> Dict[str, Any]:
     """
     Uses Gemini 1.5 Flash to extract Name, Date of Birth (DOB) or Year of Birth (YOB),
@@ -84,7 +85,6 @@ async def extract_id_info_with_gemini(document_text: str) -> Dict[str, Any]:
     if not gemini_model:
         return {"name": None, "dob": None, "age": None, "llm_extraction_error": "Gemini API not configured."}
 
-    # Prompt for extracting Name and DOB/YOB. Explicitly requesting JSON format.
     prompt = f"""
     You are an expert at extracting personal information from identity documents.
     From the provided text, extract the following information for the primary document holder:
@@ -117,32 +117,26 @@ async def extract_id_info_with_gemini(document_text: str) -> Dict[str, Any]:
     """
     
     try:
-        # Send the prompt to Gemini for content generation
         response = await gemini_model.generate_content_async(prompt)
         response_text = response.text.strip()
         
-        # --- FIX: Strip Markdown code block fences if present ---
+        # Strip Markdown code block fences if present
         if response_text.startswith("```json") and response_text.endswith("```"):
             response_text = response_text[len("```json"): -len("```")].strip()
-        # --- END FIX ---
 
-        # Parse the JSON response from Gemini. This is where Gemini's string output
-        # is converted into a Python dictionary.
         extracted_data = json.loads(response_text)
         
         dob_str = extracted_data.get("dob")
         age = None
         if dob_str:
             try:
-                # Logic to calculate age based on DOB string
-                if len(dob_str) == 4 and dob_str.isdigit(): # YYYY format
+                if len(dob_str) == 4 and dob_str.isdigit():
                     birth_year = int(dob_str)
                     current_year = datetime.now().year
                     age = current_year - birth_year
-                elif len(dob_str) == 10 and dob_str[4] == '-' and dob_str[7] == '-': # YYYY-MM-DD format
+                elif len(dob_str) == 10 and dob_str[4] == '-' and dob_str[7] == '-':
                     dob_obj = datetime.strptime(dob_str, "%Y-%m-%d")
                     today = datetime.now()
-                    # Calculate age considering month and day for accuracy
                     age = today.year - dob_obj.year - ((today.month, today.day) < (dob_obj.month, dob_obj.day))
                 else:
                     print(f"Warning: DOB format not recognized for age calculation: {dob_str}")
@@ -151,21 +145,16 @@ async def extract_id_info_with_gemini(document_text: str) -> Dict[str, Any]:
             except Exception as e:
                 print(f"Unexpected error calculating age for DOB '{dob_str}': {e}")
             
-            # Sanity check for calculated age to avoid unreasonable values (e.g., negative age)
             if age is not None and (age < 0 or age > 120):
                 age = None
 
-        # Add the calculated age to the dictionary received from Gemini.
-        # This ensures 'age' is always part of the 'extracted_id_info' structure.
         extracted_data["age"] = age 
         return extracted_data
 
     except json.JSONDecodeError as e:
-        # Handle cases where Gemini's response is not valid JSON
         print(f"Gemini response was not valid JSON: '{response_text}'. Error: {e}")
         return {"name": None, "dob": None, "age": None, "llm_extraction_error": f"Invalid JSON response from LLM or parsing error: {e}. Raw response (first 200 chars): {response_text[:200]}"}
     except Exception as e:
-        # Catch any other exceptions during the Gemini API call
         print(f"Error during Gemini extraction API call: {e}")
         return {"name": None, "dob": None, "age": None, "llm_extraction_error": str(e)}
 
@@ -191,7 +180,6 @@ async def process_document_endpoint(
     """
     file_extension = os.path.splitext(file.filename)[1].lower()
     
-    # Generate a unique filename for the uploaded file to prevent conflicts
     unique_upload_filename = processor_service._generate_unique_filepath(file.filename, prefix="uploaded_")
     original_upload_path = unique_upload_filename
 
@@ -203,7 +191,6 @@ async def process_document_endpoint(
         converted_pdf_path: Union[str, None] = None
         final_pdf_to_process: str = original_upload_path
 
-        # Determine if the file is an image and needs conversion
         if file_extension in [".png", ".jpg", ".jpeg", ".gif", ".bmp"]:
             print(f"Detected image file: {file.filename}. Converting to PDF...")
             converted_pdf_path = processor_service.convert_image_to_pdf(original_upload_path)
@@ -229,22 +216,17 @@ async def process_document_endpoint(
             )
 
         # --- LLM-based Information Extraction using Gemini ---
-        # Initialize variables for extracted info. These will be 'null' in the final JSON if no data is found.
         extracted_name = None
         extracted_dob = None
         predicted_age = None
         llm_extraction_error = None
 
         if processing_result["text_nodes"]:
-            # Combine all text nodes from LlamaParse into a single string to send to Gemini
-            # LlamaParse returns TextNode objects, so we access their 'text' attribute.
             full_document_text = "\n".join([node.text for node in processing_result["text_nodes"]])
             
-            if full_document_text.strip(): # Ensure there's actual text content before sending to Gemini
-                # Call the Gemini extraction helper function to get structured data
+            if full_document_text.strip():
                 llm_extraction_result = await extract_id_info_with_gemini(full_document_text)
                 
-                # Populate the response variables with data obtained from Gemini's output
                 if llm_extraction_result.get("llm_extraction_error"):
                     llm_extraction_error = llm_extraction_result["llm_extraction_error"]
                 else:
@@ -257,50 +239,41 @@ async def process_document_endpoint(
             llm_extraction_error = "No text nodes found by LlamaParse for Gemini extraction. Please check the document image clarity."
         # --- END LLM Extraction ---
 
-        # Prepare LlamaParse results for frontend response.
-        # These lines explicitly convert LlamaIndex TextNode and ImageDocument objects
-        # into standard Python dictionaries that FastAPI can easily serialize into JSON.
         response_text_nodes = [
             {"text": node.text, "metadata": node.metadata}
             for node in processing_result["text_nodes"]
         ]
         
         response_image_documents = [
-            # For ImageDocument, 'image_path' is the local file path on the backend server.
-            # The frontend will need to call /get_extracted_image to retrieve the actual image content.
             {"image_path": doc.image_path, "metadata": doc.metadata}
             for doc in processing_result["image_documents"]
         ]
 
-        # Construct the final JSON response sent to the frontend
         return JSONResponse(content={
             "message": "Document processed successfully and information extracted with Gemini.",
             "original_filename": file.filename,
-            "processed_file_path": final_pdf_to_process, # Path to the PDF that was processed (on backend)
+            "processed_file_path": final_pdf_to_process,
             "raw_llamaparse_json": processing_result["raw_llamaparse_json"],
             "extracted_text_nodes": response_text_nodes,
             "extracted_image_documents": response_image_documents,
-            "extracted_id_info": { # This object will contain Name, DOB, Age extracted by Gemini
+            "extracted_id_info": {
                 "name": extracted_name,
                 "dob": extracted_dob,
                 "age": predicted_age,
-                "llm_error": llm_extraction_error # Provides any error/warning from the LLM extraction step
+                "llm_error": llm_extraction_error
             }
         })
 
     except HTTPException as http_exc:
-        # Re-raise FastAPI HTTP exceptions directly
         raise http_exc
 
     except Exception as e:
-        # Catch any unexpected server errors during the entire document processing flow
         print(f"An unexpected error occurred during document processing: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"An unexpected server error occurred during document processing: {str(e)}"
         )
     finally:
-        # Clean up temporary files regardless of success or failure
         cleanup_paths = [original_upload_path]
         if converted_pdf_path:
             cleanup_paths.append(converted_pdf_path)
