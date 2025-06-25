@@ -49,32 +49,38 @@ const DocumentUpload = ({ onDocumentUpload }: DocumentUploadProps) => {
 
   const processDocument = async () => {
     if (!uploadedImage) return;
-
     setIsProcessing(true);
-    
     try {
-      // Simulate OCR processing
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // Simulate extracted data (in real implementation, this would come from OCR)
-      const extractedData = {
-        name: "Anusha Mahajan",
-        dob: "23/03/2004",
-        age: 21,
-        documentNumber: "612793769429",
-        address: "J-204, JEEVAN NIKETAN, L.I.C COLONY PASHCHIM VIHAR, Delhi, 110087"
-      };
+      // Convert base64 image to Blob
+      const blob = await (await fetch(uploadedImage)).blob();
+      const formData = new FormData();
+      formData.append('file', blob, 'aadhaar.jpg');
 
+      // Call backend API
+      const response = await fetch('http://localhost:8000/process_document', {
+        method: 'POST',
+        body: formData,
+      });
+      if (!response.ok) {
+        let errorMsg = 'Failed to process document';
+        try {
+          const errData = await response.json();
+          errorMsg = errData.detail || errorMsg;
+        } catch {}
+        throw new Error(errorMsg);
+      }
+      const data = await response.json();
+      const extracted = data.extracted_id_info || {};
       toast({
         title: "Document processed successfully",
         description: "Information extracted from your Aadhaar card"
       });
-
-      onDocumentUpload(uploadedImage, extractedData);
-    } catch (error) {
+      onDocumentUpload(uploadedImage, extracted);
+    } catch (error: any) {
+      console.error('Document processing error:', error);
       toast({
         title: "Processing failed",
-        description: "Failed to extract information from document",
+        description: error?.message || "Failed to extract information from document",
         variant: "destructive"
       });
     } finally {

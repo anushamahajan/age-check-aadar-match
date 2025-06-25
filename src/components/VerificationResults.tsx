@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -15,6 +14,7 @@ interface VerificationData {
     age?: number;
     documentNumber?: string;
     address?: string;
+    gender?: string;
   };
   verificationResults?: {
     faceMatch: number;
@@ -206,6 +206,10 @@ const VerificationResults = ({ verificationData, onReset }: VerificationResultsP
               <div>
                 <span className="text-sm text-gray-600">Aadhaar Number</span>
                 <p className="font-medium font-mono">{extractedData.documentNumber}</p>
+              </div>
+              <div>
+                <span className="text-sm text-gray-600">Gender</span>
+                <p className="font-medium">{extractedData.gender}</p>
               </div>
             </div>
             <div className="space-y-3">
