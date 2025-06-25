@@ -5,10 +5,8 @@ import uuid
 from datetime import datetime
 from typing import List, Dict, Any, Union
 
-# --- CRITICAL FIX: Apply nest_asyncio at the very beginning ---
 import nest_asyncio
 nest_asyncio.apply()
-# --- END CRITICAL FIX ---
 
 from fastapi import FastAPI, UploadFile, File, HTTPException, Depends, status
 from fastapi.responses import JSONResponse, FileResponse
@@ -58,7 +56,7 @@ else:
 # --- CORS Middleware ---
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+    allow_origins=["http://localhost:8000", "http://127.0.0.1:8000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
