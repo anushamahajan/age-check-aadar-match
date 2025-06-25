@@ -1,5 +1,4 @@
 # 🛂 Age & Identity Verification System Using Simulated Government ID Cards
-
 ScanIT: Smart Age & Identity Verification Using AI and Aadhar Simulation
 
 This is a **proof-of-concept identity verification tool** that processes a simulated Aadhar card and compares the extracted photo with a live selfie to verify:
