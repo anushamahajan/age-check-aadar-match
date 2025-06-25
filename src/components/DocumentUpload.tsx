@@ -1,4 +1,3 @@
-
 import { useState, useRef } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -59,11 +58,11 @@ const DocumentUpload = ({ onDocumentUpload }: DocumentUploadProps) => {
       
       // Simulate extracted data (in real implementation, this would come from OCR)
       const extractedData = {
-        name: "राम कुमार शर्मा",
-        dob: "15/03/1995",
-        age: 29,
-        documentNumber: "1234 5678 9012",
-        address: "123 मुख्य सड़क, नई दिल्ली"
+        name: "Anusha Mahajan",
+        dob: "23/03/2004",
+        age: 21,
+        documentNumber: "612793769429",
+        address: "J-204, JEEVAN NIKETAN, L.I.C COLONY PASHCHIM VIHAR, Delhi, 110087"
       };
 
       toast({
