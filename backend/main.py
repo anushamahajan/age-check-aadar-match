@@ -9,7 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv # To load environment variables from a .env file
 
 # Import the DocumentProcessorService from the separate file
-from document_processor_service import DocumentProcessorService
+from services.document_processor_service import DocumentProcessorService
 
 # Load environment variables from .env file
 load_dotenv()
